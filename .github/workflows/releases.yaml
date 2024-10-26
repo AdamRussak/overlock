@@ -6,8 +6,9 @@ on:
     - '*'
 
 permissions:
-    contents: write
-    packages: write
+    contents: write-all
+    packages: write-all
+
 
 jobs:
   releases-matrix:
