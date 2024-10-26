@@ -6,12 +6,13 @@ on:
     - '*'
 
 permissions:
-    contents: write-all
-    packages: write-all
-
-
+    contents: write
+    packages: write
+    
 jobs:
   releases-matrix:
+    env:
+      gh_token: ${{ secrets.GITHUB_TOKEN }}
     name: Release Go Binary
     runs-on: ubuntu-latest
     strategy:
@@ -30,7 +31,7 @@ jobs:
       run: echo APP_VERSION=$(echo ${GITHUB_REF} | rev | cut -d'/' -f 1 | rev ) >> ${GITHUB_ENV}
     - uses: wangyoucao577/go-release-action@v1
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: $gh_token
         goos: ${{ matrix.goos }}
         goarch: ${{ matrix.goarch }}
         project_path: "./cmd/overlock"
